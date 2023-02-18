@@ -1,5 +1,5 @@
 import random
-from micrograd.engine import Value
+from engine import Value
 
 class Module:
 
@@ -18,6 +18,8 @@ class Neuron(Module):
         self.nonlin = nonlin
 
     def __call__(self, x):
+        if len(x) != len(self.w):
+            raise ValueError("input dimension and neuron dimension must match")
         act = sum((wi*xi for wi,xi in zip(self.w, x)), self.b)
         return act.relu() if self.nonlin else act
 
